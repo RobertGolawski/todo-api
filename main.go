@@ -25,21 +25,6 @@ func serverSave(w http.ResponseWriter, r *http.Request) {
 
 	mu.Lock()
 	defer mu.Unlock()
-	_, err = os.Stat(filePath)
-	if err != nil {
-		if !errors.Is(err, os.ErrNotExist) {
-			log.Printf("Error was not just a missing file: %v", err)
-			http.Error(w, "Internal server error", http.StatusInternalServerError)
-			return
-		}
-		f, err := os.Create(filePath)
-		if err != nil {
-			log.Printf("Error creating file %v", err)
-			http.Error(w, "Internal server error", http.StatusInternalServerError)
-			return
-		}
-		f.Close()
-	}
 
 	var data TodoList
 
